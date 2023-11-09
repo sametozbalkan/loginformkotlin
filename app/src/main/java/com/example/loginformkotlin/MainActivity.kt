@@ -1,8 +1,10 @@
 package com.example.loginformkotlin
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -34,8 +36,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.loginformkotlin.ui.theme.LoginformkotlinTheme
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -51,11 +57,13 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginForm() {
     var text by remember { mutableStateOf(TextFieldValue("")) }
     var text2 by remember { mutableStateOf(TextFieldValue("")) }
+    val zaman = Calendar.getInstance().time
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -73,6 +81,14 @@ fun LoginForm() {
                     .padding(10.dp),
                 verticalArrangement = Arrangement.Center,
             ) {
+                Row(modifier= Modifier
+                    .padding(start = 10.dp, bottom = 10.dp, end = 10.dp)
+                    .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+                Text(text = SimpleDateFormat("dd/MM/yyyy", Locale("TR","tr")).format(zaman))
+
+                Text(text = SimpleDateFormat("HH:mm", Locale("TR","tr")).format(zaman))
+
+                }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
